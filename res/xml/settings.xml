@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory
+		android:title="@string/settings_samsung_dex">
+
+		<MultiSelectListPreference
+			android:name="@string/settings_immersive_apps"
+			android:summary="@string/settings_immersive_apps_sum"
+			android:title="@string/settings_immersive_apps"
+			android:key="immersiveApps"
+			android:dialogTitle="@string/settings_immersive_apps" />
+
+		<CheckBoxPreference
+			android:name="@string/settings_fix_keyboard"
+			android:summary="@string/settings_fix_keyboard_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_fix_keyboard"
+			android:key="fixKeyboard" />
+
+		<CheckBoxPreference
+			android:name="@string/settings_fix_sbrowser"
+			android:summary="@string/settings_fix_sbrowser_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_fix_sbrowser"
+			android:key="fixSBrowser" />
+
+		<CheckBoxPreference
+			android:name="@string/settings_fix_weather"
+			android:summary="@string/settings_fix_weather_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_fix_weather"
+			android:key="fixWeather" />
+
+	</PreferenceCategory>
+
+</PreferenceScreen>
