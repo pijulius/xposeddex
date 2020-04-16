@@ -4,13 +4,16 @@ Samsung Dex modifications through Xposed
 1. Immersive Apps,
 Will enable the possibility to define which apps to run in Immersive mode so they remove the titlebar when maximized.
 
-2. Fix Keyboard,
+2. Hide Dex Logo,
+Removes the Dex logo from the taskbar to have more space (that menu wasn't anyway that useful). (change requires restart)
+
+3. Fix Keyboard,
 Enables floating mode for non qwerty keyboard layouts too and fixes dark mode having a white border around the keyboard. (change requires restart)
 
-3. Fix Samsung Browser,
+4. Fix Samsung Browser,
 Enables secret mode (as it's disabled if Magisk installed) and disable always visible scroll bar (looks ugly under dark mode).  (change requires restart)
 
-4. Fix Weather,
+5. Fix Weather,
 Keep displaying weather icon in the statusbar. (change requires restart)
 
 IMPORTANT: Requires Magisk and edXposed installed on your tablet. 
