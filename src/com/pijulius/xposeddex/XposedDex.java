@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -20,6 +21,7 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
+import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLoadPackage, IXposedHookZygoteInit {
@@ -56,6 +58,9 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 	public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
 		if (settings == null)
 			settings = new XSharedPreferences(new File(settingsFile));
+
+		if (settings.getBoolean("hideDexLogo", true))
+			hideDexLogo(resparam);
 
 		if (settings.getBoolean("fixKeyboard", true))
 			keyboardResourceFixes(resparam);
@@ -94,6 +99,34 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 					return;
 
 				activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+			}
+		});
+	}
+
+	public void hideDexLogo(InitPackageResourcesParam resparam) {
+		if (!resparam.packageName.equals("com.samsung.desktopsystemui"))
+			return;
+
+		resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "taskbar", new XC_LayoutInflated() {
+			@Override
+			public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
+				View view = null;
+
+				view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+					"dex_community", "id", "com.samsung.desktopsystemui"));
+
+				view.setVisibility(View.GONE);
+				view.getLayoutParams().width = 0;
+
+				view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+					"dex_community_divider", "id", "com.samsung.desktopsystemui"));
+
+				view.setVisibility(View.GONE);
+				view.getLayoutParams().width = 0;
+
+				MarginLayoutParams marginParams = (MarginLayoutParams)view.getLayoutParams();
+				marginParams.setMarginStart(0);
+				marginParams.setMarginEnd(0);
 			}
 		});
 	}

@@ -13,6 +13,13 @@
 			android:dialogTitle="@string/settings_immersive_apps" />
 
 		<CheckBoxPreference
+			android:name="@string/settings_hide_dex_logo"
+			android:summary="@string/settings_hide_dex_logo_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_hide_dex_logo"
+			android:key="hideDexLogo" />
+
+		<CheckBoxPreference
 			android:name="@string/settings_fix_keyboard"
 			android:summary="@string/settings_fix_keyboard_sum"
 			android:defaultValue="true"

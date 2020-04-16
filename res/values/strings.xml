@@ -7,13 +7,13 @@
 	<string name="settings_samsung_dex">Samsung Dex</string>
 	<string name="settings_immersive_apps">Immersive Apps</string>
 	<string name="settings_immersive_apps_sum">Apps for which to remove window titlebar when maximized.</string>
+	<string name="settings_hide_dex_logo">Hide Dex Logo</string>
+	<string name="settings_hide_dex_logo_sum">Removes the Dex logo from the taskbar.</string>
 	<string name="settings_fix_keyboard">Fix Keyboard</string>
 	<string name="settings_fix_keyboard_sum">Enables floating mode for non qwerty keyboard layouts too.</string>
 	<string name="settings_fix_sbrowser">Fix Samsung Browser</string>
 	<string name="settings_fix_sbrowser_sum">Enables secret mode and disable always visible scroll bar.</string>
 	<string name="settings_fix_weather">Fix Weather</string>
 	<string name="settings_fix_weather_sum">Keep displaying weather icon in the statusbar.</string>
-	<string name="settings_fix_squid">Fix Squid</string>
-	<string name="settings_fix_squid_sum">Make it Premium and some small fixes.</string>
 
 </resources>
