@@ -7,13 +7,19 @@ Will enable the possibility to define which apps to run in Immersive mode so the
 2. Hide Dex Logo,
 Removes the Dex logo from the taskbar to have more space (that menu wasn't anyway that useful). (change requires restart)
 
-3. Fix Keyboard,
+3. Hide NoSIM Icon, 
+Removes the NoSIM icon from statusbar. (change requires restart)
+
+4. Hide App Overflow Buttons, 
+Removes left and right arrows when to many apps are open. (change requires restart)
+
+5. Fix Keyboard,
 Enables floating mode for non qwerty keyboard layouts too and fixes dark mode having a white border around the keyboard. (change requires restart)
 
-4. Fix Samsung Browser,
+6. Fix Samsung Browser,
 Enables secret mode (as it's disabled if Magisk installed) and disable always visible scroll bar (looks ugly under dark mode).  (change requires restart)
 
-5. Fix Weather,
+7. Fix Weather,
 Keep displaying weather icon in the statusbar. (change requires restart)
 
 IMPORTANT: Requires Magisk and edXposed installed on your tablet. 
