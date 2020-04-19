@@ -77,12 +77,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 
 		if ("immersiveApps".equals(key))
 			editor.putStringSet(key, sharedPreferences.getStringSet(key, new HashSet<String>()));
-
-		if ("fixKeyboard".equals(key) || "fixSBrowser".equals(key) || "fixWeather".equals(key) ||
-			"hideDexLogo".equals(key) || "fixSquid".equals(key))
-		{
+		else
 			editor.putBoolean(key, sharedPreferences.getBoolean(key, true));
-		}
 
 		editor.apply();
 

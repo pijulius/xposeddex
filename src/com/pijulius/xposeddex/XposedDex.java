@@ -59,8 +59,7 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 		if (settings == null)
 			settings = new XSharedPreferences(new File(settingsFile));
 
-		if (settings.getBoolean("hideDexLogo", true))
-			hideDexLogo(resparam);
+		taskbarResourceFixes(resparam);
 
 		if (settings.getBoolean("fixKeyboard", true))
 			keyboardResourceFixes(resparam);
@@ -103,32 +102,80 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 		});
 	}
 
-	public void hideDexLogo(InitPackageResourcesParam resparam) {
+	public void taskbarResourceFixes(InitPackageResourcesParam resparam) {
 		if (!resparam.packageName.equals("com.samsung.desktopsystemui"))
 			return;
 
-		resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "taskbar", new XC_LayoutInflated() {
-			@Override
-			public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
-				View view = null;
+		final boolean hideDexLogo = settings.getBoolean("hideDexLogo", true);
+		final boolean hideAppOverflowButtons = settings.getBoolean("hideAppOverflowButtons", true);
 
-				view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
-					"dex_community", "id", "com.samsung.desktopsystemui"));
+		if (hideDexLogo || hideAppOverflowButtons) {
+			resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "taskbar", new XC_LayoutInflated() {
+				@Override
+				public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
+					View view = null;
 
-				view.setVisibility(View.GONE);
-				view.getLayoutParams().width = 0;
+					if (hideDexLogo) {
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"dex_community", "id", "com.samsung.desktopsystemui"));
 
-				view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
-					"dex_community_divider", "id", "com.samsung.desktopsystemui"));
+						view.setVisibility(View.GONE);
+						view.getLayoutParams().width = 0;
 
-				view.setVisibility(View.GONE);
-				view.getLayoutParams().width = 0;
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"dex_community_divider", "id", "com.samsung.desktopsystemui"));
 
-				MarginLayoutParams marginParams = (MarginLayoutParams)view.getLayoutParams();
-				marginParams.setMarginStart(0);
-				marginParams.setMarginEnd(0);
-			}
-		});
+						view.setVisibility(View.GONE);
+						view.getLayoutParams().width = 0;
+
+						MarginLayoutParams marginParams = (MarginLayoutParams)view.getLayoutParams();
+						marginParams.setMarginStart(0);
+						marginParams.setMarginEnd(0);
+					}
+
+					if (hideAppOverflowButtons) {
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"button_scroll_left", "id", "com.samsung.desktopsystemui"));
+
+						view.setVisibility(View.GONE);
+						view.getLayoutParams().width = 0;
+
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"button_scroll_right", "id", "com.samsung.desktopsystemui"));
+
+						view.setVisibility(View.GONE);
+						view.getLayoutParams().width = 0;
+					}
+				}
+			});
+		}
+
+		if (settings.getBoolean("hideNoSIMIcon", true)) {
+			resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "desk_signal_cluster_view", new XC_LayoutInflated() {
+				@Override
+				public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
+					View view = null;
+
+					view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+						"no_sims_combo", "id", "com.samsung.desktopsystemui"));
+
+					view.setVisibility(View.GONE);
+					view.getLayoutParams().width = 0;
+
+					view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+						"sec_no_sim_slot1", "id", "com.samsung.desktopsystemui"));
+
+					view.setVisibility(View.GONE);
+					view.getLayoutParams().width = 0;
+
+					view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+						"sec_no_sim_slot2", "id", "com.samsung.desktopsystemui"));
+
+					view.setVisibility(View.GONE);
+					view.getLayoutParams().width = 0;
+				}
+			});
+		}
 	}
 
 	public void keyboardFixes(LoadPackageParam lpparam) {
