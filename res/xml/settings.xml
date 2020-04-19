@@ -13,13 +13,6 @@
 			android:dialogTitle="@string/settings_immersive_apps" />
 
 		<CheckBoxPreference
-			android:name="@string/settings_hide_dex_logo"
-			android:summary="@string/settings_hide_dex_logo_sum"
-			android:defaultValue="true"
-			android:title="@string/settings_hide_dex_logo"
-			android:key="hideDexLogo" />
-
-		<CheckBoxPreference
 			android:name="@string/settings_fix_keyboard"
 			android:summary="@string/settings_fix_keyboard_sum"
 			android:defaultValue="true"
@@ -39,6 +32,39 @@
 			android:defaultValue="true"
 			android:title="@string/settings_fix_weather"
 			android:key="fixWeather" />
+
+		<CheckBoxPreference
+			android:name="@string/settings_fix_squid"
+			android:summary="@string/settings_fix_squid_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_fix_squid"
+			android:key="fixSquid" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/settings_samsung_dex_taskbar">
+
+		<CheckBoxPreference
+			android:name="@string/settings_hide_dex_logo"
+			android:summary="@string/settings_hide_dex_logo_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_hide_dex_logo"
+			android:key="hideDexLogo" />
+
+		<CheckBoxPreference
+			android:name="@string/settings_hide_nosim_icon"
+			android:summary="@string/settings_hide_nosim_icon_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_hide_nosim_icon"
+			android:key="hideNoSIMIcon" />
+
+		<CheckBoxPreference
+			android:name="@string/settings_hide_app_overflow_buttons"
+			android:summary="@string/settings_hide_app_overflow_buttons_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_hide_app_overflow_buttons"
+			android:key="hideAppOverflowButtons" />
 
 	</PreferenceCategory>
 
