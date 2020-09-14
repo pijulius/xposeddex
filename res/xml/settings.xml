@@ -5,19 +5,12 @@
 	<PreferenceCategory
 		android:title="@string/settings_samsung_dex">
 
-		<MultiSelectListPreference
-			android:name="@string/settings_immersive_apps"
-			android:summary="@string/settings_immersive_apps_sum"
-			android:title="@string/settings_immersive_apps"
-			android:key="immersiveApps"
-			android:dialogTitle="@string/settings_immersive_apps" />
-
 		<CheckBoxPreference
-			android:name="@string/settings_fix_keyboard"
-			android:summary="@string/settings_fix_keyboard_sum"
+			android:name="@string/settings_make_apps_immersive"
+			android:summary="@string/settings_make_apps_immersive_sum"
 			android:defaultValue="true"
-			android:title="@string/settings_fix_keyboard"
-			android:key="fixKeyboard" />
+			android:title="@string/settings_make_apps_immersive"
+			android:key="makeAppsImmersive" />
 
 		<CheckBoxPreference
 			android:name="@string/settings_fix_sbrowser"
@@ -25,13 +18,6 @@
 			android:defaultValue="true"
 			android:title="@string/settings_fix_sbrowser"
 			android:key="fixSBrowser" />
-
-		<CheckBoxPreference
-			android:name="@string/settings_fix_weather"
-			android:summary="@string/settings_fix_weather_sum"
-			android:defaultValue="true"
-			android:title="@string/settings_fix_weather"
-			android:key="fixWeather" />
 
 	</PreferenceCategory>
 
@@ -44,13 +30,6 @@
 			android:defaultValue="true"
 			android:title="@string/settings_fix_taskbar"
 			android:key="fixTaskbar" />
-
-		<CheckBoxPreference
-			android:name="@string/settings_hide_dex_logo"
-			android:summary="@string/settings_hide_dex_logo_sum"
-			android:defaultValue="true"
-			android:title="@string/settings_hide_dex_logo"
-			android:key="hideDexLogo" />
 
 		<CheckBoxPreference
 			android:name="@string/settings_hide_tasks_button"
@@ -67,18 +46,18 @@
 			android:key="hideNoSIMIcon" />
 
 		<CheckBoxPreference
-			android:name="@string/settings_hide_app_overflow_buttons"
-			android:summary="@string/settings_hide_app_overflow_buttons_sum"
+			android:name="@string/settings_hide_battery_percentage"
+			android:summary="@string/settings_hide_battery_percentage_sum"
 			android:defaultValue="true"
-			android:title="@string/settings_hide_app_overflow_buttons"
-			android:key="hideAppOverflowButtons" />
+			android:title="@string/settings_hide_battery_percentage"
+			android:key="hideBatteryPercentage" />
 
 		<CheckBoxPreference
-			android:name="@string/settings_hide_statusbar_separators"
-			android:summary="@string/settings_hide_statusbar_separators_sum"
-			android:defaultValue="false"
-			android:title="@string/settings_hide_statusbar_separators"
-			android:key="hideStatusBarSeparators" />
+			android:name="@string/settings_hide_taskbar_separators"
+			android:summary="@string/settings_hide_taskbar_separators_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_hide_taskbar_separators"
+			android:key="hideTaskbarSeparators" />
 
 	</PreferenceCategory>
 

@@ -1,18 +1,13 @@
 package com.pijulius.xposeddex;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.MultiSelectListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
@@ -41,33 +36,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			super.onCreate(savedInstanceState);
 
 			addPreferencesFromResource(R.xml.settings);
-
-			MultiSelectListPreference immersiveApps =
-					(MultiSelectListPreference) findPreference("immersiveApps");
-
-			Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-			mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-			List<ResolveInfo> pkgAppsList =
-					getActivity().getPackageManager().queryIntentActivities(mainIntent, 0);
-
-			String[] allApps = new String[pkgAppsList.size()];
-			String[] allPackages = new String[pkgAppsList.size()];
-
-			int i = 0;
-			for (ResolveInfo ri : pkgAppsList) {
-				if (ri.activityInfo == null)
-					continue;
-
-				allApps[i] = ri.activityInfo.loadLabel(
-						getActivity().getPackageManager()).toString();
-				allPackages[i] = ri.activityInfo.packageName;
-
-				i++;
-			}
-
-			immersiveApps.setEntries(allApps);
-			immersiveApps.setEntryValues(allPackages);
 		}
 	}
 
@@ -75,11 +43,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		Editor editor = protectedPreferences.edit();
 
-		if ("immersiveApps".equals(key))
-			editor.putStringSet(key, sharedPreferences.getStringSet(key, new HashSet<String>()));
-		else
-			editor.putBoolean(key, sharedPreferences.getBoolean(key, true));
-
+		editor.putBoolean(key, sharedPreferences.getBoolean(key, true));
 		editor.apply();
 
 		AsyncTask.execute(new Runnable() {

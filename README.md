@@ -1,3 +1,32 @@
+# XposedDex One UI 2.5
+Samsung Dex modifications through Xposed
+
+1. Make Apps Immersive,
+Will remove window titlebar for maximized applications.
+
+2. Hide NoSIM Icon,
+Removes the NoSIM icon from statusbar.
+
+3. Fix Samsung Browser,
+Enables secret mode (as it's disabled if Magisk installed) and disable always visible scroll bar (looks ugly under dark mode).
+
+4. Hide Tasks Button,
+Remove the tasks button on the taskbar.
+
+5. Hide Taskbar Separators,
+Removes empty gaps (separators) from taskbar.
+
+6. Taskbar Fixes,
+Add small space above app docks running marker.
+
+7. Hide Battery Percentage,
+Removes the battery percentage from statusbar.
+
+NOTE: All changes require a restart.
+
+IMPORTANT: Requires Magisk and edXposed installed on your tablet. 
+Only tested with One UI 2.5, Android 10, Build T865XXU4BTI1 so latest release for Tab S6
+
 # XposedDex One UI 2.1
 Samsung Dex modifications through Xposed
 
