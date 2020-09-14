@@ -44,6 +44,9 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 
 		immersiveApps(lpparam);
 
+		if (settings.getBoolean("fixTaskbar", true))
+			taskbarFixes(lpparam);
+
 		if (settings.getBoolean("fixKeyboard", true))
 			keyboardFixes(lpparam);
 
@@ -102,14 +105,44 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 		});
 	}
 
+	public void taskbarFixes(LoadPackageParam lpparam) {
+		// Taskbar fixes, disable setting the black backgrounds when an app is maximized
+		if (!lpparam.packageName.equals("com.samsung.desktopsystemui"))
+			return;
+
+		Class<?> hookClass = null;
+
+		hookClass = findClass("com.samsung.desktopsystemui.statusbar.phone.taskbar.views.TaskBarView",
+				lpparam.classLoader);
+
+		XposedBridge.hookAllMethods(hookClass, "setDarkBackground", new XC_MethodHook() {
+			@Override
+			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				param.setResult(false);
+			}
+		});
+
+		hookClass = findClass("com.samsung.desktopsystemui.statusbar.phone.taskbar.desk.DeskStatusBarView",
+				lpparam.classLoader);
+
+		XposedBridge.hookAllMethods(hookClass, "setDarkBackground", new XC_MethodHook() {
+			@Override
+			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				param.setResult(false);
+			}
+		});
+	}
+
 	public void taskbarResourceFixes(InitPackageResourcesParam resparam) {
 		if (!resparam.packageName.equals("com.samsung.desktopsystemui"))
 			return;
 
 		final boolean hideDexLogo = settings.getBoolean("hideDexLogo", true);
+		final boolean hideTasksButton = settings.getBoolean("hideTasksButton", true);
 		final boolean hideAppOverflowButtons = settings.getBoolean("hideAppOverflowButtons", true);
+		final boolean hideStatusBarSeparators = settings.getBoolean("hideStatusBarSeparators", true);
 
-		if (hideDexLogo || hideAppOverflowButtons) {
+		if (hideDexLogo || hideTasksButton || hideAppOverflowButtons || hideStatusBarSeparators) {
 			resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "taskbar", new XC_LayoutInflated() {
 				@Override
 				public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
@@ -133,6 +166,18 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 						marginParams.setMarginEnd(0);
 					}
 
+					if (hideTasksButton) {
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"recent_apps", "id", "com.samsung.desktopsystemui"));
+
+						view.setVisibility(View.GONE);
+						view.getLayoutParams().width = 0;
+
+						MarginLayoutParams marginParams = (MarginLayoutParams)view.getLayoutParams();
+						marginParams.setMarginStart(0);
+						marginParams.setMarginEnd(0);
+					}
+
 					if (hideAppOverflowButtons) {
 						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
 							"button_scroll_left", "id", "com.samsung.desktopsystemui"));
@@ -146,8 +191,89 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 						view.setVisibility(View.GONE);
 						view.getLayoutParams().width = 0;
 					}
+
+					if (hideStatusBarSeparators) {
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"size_control", "id", "com.samsung.desktopsystemui"));
+
+						MarginLayoutParams marginParams = (MarginLayoutParams)view.getLayoutParams();
+						marginParams.setMarginStart(0);
+						marginParams.setMarginEnd(0);
+
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"desk_status_bar_container", "id", "com.samsung.desktopsystemui"));
+
+						marginParams = (MarginLayoutParams)view.getLayoutParams();
+						marginParams.setMarginStart(0);
+						marginParams.setMarginEnd(0);
+
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"taskbar_divider", "id", "com.samsung.desktopsystemui"));
+
+						view.setVisibility(View.GONE);
+						view.getLayoutParams().width = 0;
+						view.setPadding(0, 0, 0, 0);
+
+						marginParams = (MarginLayoutParams)view.getLayoutParams();
+						marginParams.setMarginStart(0);
+						marginParams.setMarginEnd(0);
+
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"global_function", "id", "com.samsung.desktopsystemui"));
+
+						view.setPadding(0, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+					}
 				}
 			});
+
+			if (hideStatusBarSeparators) {
+				resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "desk_status_bar", new XC_LayoutInflated() {
+					@Override
+					public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
+						View view = null;
+
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"notification_icon_area", "id", "com.samsung.desktopsystemui"));
+
+						view.setPadding(0, view.getPaddingTop(), 0, view.getPaddingBottom());
+
+						MarginLayoutParams marginParams = (MarginLayoutParams)view.getLayoutParams();
+						marginParams.setMarginStart(0);
+						marginParams.setMarginEnd(0);
+
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"system_icon_area_outer", "id", "com.samsung.desktopsystemui"));
+
+						view.setPadding(0, view.getPaddingTop(), 0, view.getPaddingBottom());
+					}
+				});
+
+				resparam.res.setReplacement(
+					"com.samsung.desktopsystemui", "drawable", "desk_panel_view_bg", new XResources.DrawableLoader() {
+						@Override
+						public Drawable newDrawable(XResources res, int id) throws Throwable {
+							return new ColorDrawable(Color.TRANSPARENT);
+						}
+					});
+
+				resparam.res.setReplacement(
+					"com.samsung.desktopsystemui", "drawable", "quick_connect_hidden_icon", new XResources.DrawableLoader() {
+						@SuppressWarnings("deprecation")
+						@Override
+						public Drawable newDrawable(XResources res, int id) throws Throwable {
+							return res.getDrawable(android.R.drawable.arrow_up_float);
+						}
+					});
+
+				resparam.res.setReplacement(
+					"com.samsung.desktopsystemui", "drawable", "stat_notify_more_for_desk", new XResources.DrawableLoader() {
+						@SuppressWarnings("deprecation")
+						@Override
+						public Drawable newDrawable(XResources res, int id) throws Throwable {
+							return res.getDrawable(android.R.drawable.arrow_up_float);
+						}
+					});
+			}
 		}
 
 		if (settings.getBoolean("hideNoSIMIcon", true)) {
@@ -260,12 +386,14 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 			}
 		});
 
-		hookClass = findClass("com.sec.android.daemonapp.app.notification.WeatherNotificationManager",
+		//hookClass = findClass("com.samsung.android.weather.infrastructure.system.android.DesktopModeManager",
+		//hookClass = findClass("com.samsung.android.weather.infrastructure.system.sdl.DesktopModeManager",
+		hookClass = findClass("com.samsung.android.weather.infrastructure.system.sep.DesktopModeManager",
 				lpparam.classLoader);
 
-		XposedBridge.hookAllMethods(hookClass, "stopPanelOnGoingNoti", new XC_MethodHook() {
+		XposedBridge.hookAllMethods(hookClass, "isDesktopMode", new XC_MethodHook() {
 			@Override
-			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				param.setResult(false);
 			}
 		});

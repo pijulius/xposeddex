@@ -13,14 +13,18 @@
 	<string name="settings_fix_sbrowser_sum">Enables secret mode and disable always visible scroll bar.</string>
 	<string name="settings_fix_weather">Fix Weather</string>
 	<string name="settings_fix_weather_sum">Keep displaying weather icon in the statusbar.</string>
-	<string name="settings_fix_squid">Fix Squid</string>
-	<string name="settings_fix_squid_sum">Make it Premium and some small fixes.</string>
 
 	<string name="settings_samsung_dex_taskbar">Dex Taskbar</string>
+	<string name="settings_fix_taskbar">Fix Taskbar</string>
+	<string name="settings_fix_taskbar_sum">Disable setting black backgrounds for statusbar and taskbar buttons on maximized applications.</string>
 	<string name="settings_hide_dex_logo">Hide Dex Logo</string>
 	<string name="settings_hide_dex_logo_sum">Removes the Dex logo from the taskbar.</string>
+	<string name="settings_hide_tasks_button">Hide Tasks Button</string>
+	<string name="settings_hide_tasks_button_sum">Removes the Tasks button from the taskbar.</string>
 	<string name="settings_hide_nosim_icon">Hide NoSIM Icon</string>
 	<string name="settings_hide_nosim_icon_sum">Removes the NoSIM icon from statusbar.</string>
+	<string name="settings_hide_statusbar_separators">Hide StatusBar Separators</string>
+	<string name="settings_hide_statusbar_separators_sum">Removes empty gaps from statusbar to make it more compact.</string>
 	<string name="settings_hide_app_overflow_buttons">Hide App Overflow Buttons</string>
 	<string name="settings_hide_app_overflow_buttons_sum">Removes left and right arrows when to many apps are open.</string>
 

@@ -33,17 +33,17 @@
 			android:title="@string/settings_fix_weather"
 			android:key="fixWeather" />
 
-		<CheckBoxPreference
-			android:name="@string/settings_fix_squid"
-			android:summary="@string/settings_fix_squid_sum"
-			android:defaultValue="true"
-			android:title="@string/settings_fix_squid"
-			android:key="fixSquid" />
-
 	</PreferenceCategory>
 
 	<PreferenceCategory
 		android:title="@string/settings_samsung_dex_taskbar">
+
+		<CheckBoxPreference
+			android:name="@string/settings_fix_taskbar"
+			android:summary="@string/settings_fix_taskbar_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_fix_taskbar"
+			android:key="fixTaskbar" />
 
 		<CheckBoxPreference
 			android:name="@string/settings_hide_dex_logo"
@@ -51,6 +51,13 @@
 			android:defaultValue="true"
 			android:title="@string/settings_hide_dex_logo"
 			android:key="hideDexLogo" />
+
+		<CheckBoxPreference
+			android:name="@string/settings_hide_tasks_button"
+			android:summary="@string/settings_hide_tasks_button_sum"
+			android:defaultValue="false"
+			android:title="@string/settings_hide_tasks_button"
+			android:key="hideTasksButton" />
 
 		<CheckBoxPreference
 			android:name="@string/settings_hide_nosim_icon"
@@ -65,6 +72,13 @@
 			android:defaultValue="true"
 			android:title="@string/settings_hide_app_overflow_buttons"
 			android:key="hideAppOverflowButtons" />
+
+		<CheckBoxPreference
+			android:name="@string/settings_hide_statusbar_separators"
+			android:summary="@string/settings_hide_statusbar_separators_sum"
+			android:defaultValue="false"
+			android:title="@string/settings_hide_statusbar_separators"
+			android:key="hideStatusBarSeparators" />
 
 	</PreferenceCategory>
 
