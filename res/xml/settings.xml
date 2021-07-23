@@ -19,17 +19,17 @@
 			android:title="@string/settings_fix_sbrowser"
 			android:key="fixSBrowser" />
 
+		<CheckBoxPreference
+			android:name="@string/settings_fix_soundtouch"
+			android:summary="@string/settings_fix_soundtouch_sum"
+			android:defaultValue="true"
+			android:title="@string/settings_fix_soundtouch"
+			android:key="fixSoundTouch" />
+
 	</PreferenceCategory>
 
 	<PreferenceCategory
 		android:title="@string/settings_samsung_dex_taskbar">
-
-		<CheckBoxPreference
-			android:name="@string/settings_fix_taskbar"
-			android:summary="@string/settings_fix_taskbar_sum"
-			android:defaultValue="true"
-			android:title="@string/settings_fix_taskbar"
-			android:key="fixTaskbar" />
 
 		<CheckBoxPreference
 			android:name="@string/settings_hide_tasks_button"
@@ -39,18 +39,11 @@
 			android:key="hideTasksButton" />
 
 		<CheckBoxPreference
-			android:name="@string/settings_hide_nosim_icon"
-			android:summary="@string/settings_hide_nosim_icon_sum"
+			android:name="@string/settings_hide_date"
+			android:summary="@string/settings_hide_date_sum"
 			android:defaultValue="true"
-			android:title="@string/settings_hide_nosim_icon"
-			android:key="hideNoSIMIcon" />
-
-		<CheckBoxPreference
-			android:name="@string/settings_hide_battery_percentage"
-			android:summary="@string/settings_hide_battery_percentage_sum"
-			android:defaultValue="true"
-			android:title="@string/settings_hide_battery_percentage"
-			android:key="hideBatteryPercentage" />
+			android:title="@string/settings_hide_date"
+			android:key="hideDate" />
 
 		<CheckBoxPreference
 			android:name="@string/settings_hide_taskbar_separators"

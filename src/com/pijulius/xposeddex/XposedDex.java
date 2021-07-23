@@ -47,10 +47,13 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 			settings = new XSharedPreferences(new File(settingsFile));
 
 		taskbarResourceFixes(resparam);
+
+		if (settings.getBoolean("fixSoundTouch", true))
+			soundtouchResourceFixes(resparam);
 	}
 
 	public void makeAppsImmersive(LoadPackageParam lpparam) {
-		Class<?> hookClass = findClass("com.android.internal.policy.MultiWindowDecorSupport",
+		Class<?> hookClass = findClass("com.android.internal.policy.DecorView",
 				lpparam.classLoader);
 
 		XposedBridge.hookAllMethods(hookClass, "isImmersiveMode", new XC_MethodHook() {
@@ -67,9 +70,9 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 
 		final boolean hideTasksButton = settings.getBoolean("hideTasksButton", true);
 		final boolean hideTaskbarSeparators = settings.getBoolean("hideTaskbarSeparators", true);
-		final boolean spaceAboveAppDock = settings.getBoolean("fixTaskbar", true);
+		final boolean hideDate = settings.getBoolean("hideDate", true);
 
-		if (hideTasksButton || hideTaskbarSeparators || spaceAboveAppDock) {
+		if (hideTasksButton || hideTaskbarSeparators || hideDate) {
 			resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "taskbar", new XC_LayoutInflated() {
 				@Override
 				public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
@@ -111,70 +114,51 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 						marginParams.setMarginEnd(0);
 					}
 
-					if (spaceAboveAppDock) {
+					if (hideTasksButton && hideTaskbarSeparators) {
 						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
 							"appdock_container", "id", "com.samsung.desktopsystemui"));
 
-						view.setPadding(0, 4, 0, 0);
+						MarginLayoutParams marginParams = (MarginLayoutParams)view.getLayoutParams();
+						marginParams.setMarginStart(400);
+						marginParams.setMarginEnd(550);
+					}
+
+					if (hideDate) {
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"date", "id", "com.samsung.desktopsystemui"));
+
+						view.setVisibility(View.GONE);
+						view.getLayoutParams().width = 0;
+						view.setPadding(0, 0, 0, 0);
 					}
 				}
 			});
 		}
 
-		if (settings.getBoolean("hideNoSIMIcon", true)) {
-			resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "desk_signal_cluster_view_25", new XC_LayoutInflated() {
+		if (hideTaskbarSeparators) {
+			resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "pinned_apps_divider", new XC_LayoutInflated() {
 				@Override
 				public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
 					View view = null;
 
-					view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
-						"no_sims_combo", "id", "com.samsung.desktopsystemui"));
+					if (hideTaskbarSeparators) {
+						view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
+							"pinned_apps_divider", "id", "com.samsung.desktopsystemui"));
 
-					view.setVisibility(View.GONE);
-					view.getLayoutParams().width = 0;
-
-					view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
-						"sec_no_sim_slot1", "id", "com.samsung.desktopsystemui"));
-
-					view.setVisibility(View.GONE);
-					view.getLayoutParams().width = 0;
-
-					view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
-						"sec_no_sim_slot2", "id", "com.samsung.desktopsystemui"));
-
-					view.setVisibility(View.GONE);
-					view.getLayoutParams().width = 0;
+						view.setVisibility(View.GONE);
+						view.getLayoutParams().width = 0;
+						view.setPadding(0, 0, 0, 0);
+					}
 				}
 			});
 		}
+	}
 
-		if (settings.getBoolean("hideBatteryPercentage", true)) {
-			resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "battery_percentage_view", new XC_LayoutInflated() {
-				@Override
-				public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
-					View view = null;
+	public void soundtouchResourceFixes(InitPackageResourcesParam resparam) {
+		if (!resparam.packageName.equals("com.bose.soundtouch"))
+			return;
 
-					view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
-						"battery_percentage_view", "id", "com.samsung.desktopsystemui"));
-
-					view.setVisibility(View.GONE);
-				}
-			});
-
-			resparam.res.hookLayout("com.samsung.desktopsystemui", "layout", "desk_system_icons", new XC_LayoutInflated() {
-				@Override
-				public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
-					View view = null;
-
-					view = (View)liparam.view.findViewById(liparam.res.getIdentifier(
-						"system_icons_battery_container", "id", "com.samsung.desktopsystemui"));
-
-					MarginLayoutParams marginParams = (MarginLayoutParams)view.getLayoutParams();
-					marginParams.setMarginStart(10);
-					marginParams.setMarginEnd(10);
-				}
-			});
-		}
+		resparam.res.setReplacement("com.bose.soundtouch", "bool", "allow_rotation", true);
 	}
 
 	public void sbrowserFixes(LoadPackageParam lpparam) {
@@ -184,7 +168,7 @@ public class XposedDex implements IXposedHookInitPackageResources, IXposedHookLo
 
 		Class<?> hookClass = null;
 
-		hookClass = findClass("com.sec.android.app.sbrowser.SBrowserCommandLine",
+		hookClass = findClass("com.sec.android.app.sbrowser.init.SBrowserCommandLine",
 				lpparam.classLoader);
 
 		XposedBridge.hookAllMethods(hookClass, "setSamsungDexEnabled", new XC_MethodHook() {

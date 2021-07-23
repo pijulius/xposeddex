@@ -9,16 +9,14 @@
 	<string name="settings_make_apps_immersive_sum">Will remove window titlebar for maximized applications.</string>
 	<string name="settings_fix_sbrowser">Fix Samsung Browser</string>
 	<string name="settings_fix_sbrowser_sum">Enables secret mode and disable always visible scroll bar.</string>
+	<string name="settings_fix_soundtouch">Fix SoundTouch</string>
+	<string name="settings_fix_soundtouch_sum">Make Bose SoundTouch app to be landscape and always show volume control slider.</string>
 
 	<string name="settings_samsung_dex_taskbar">Dex Taskbar</string>
-	<string name="settings_fix_taskbar">Taskbar Fixes</string>
-	<string name="settings_fix_taskbar_sum">Add small space above app docks running marker.</string>
 	<string name="settings_hide_tasks_button">Hide Tasks Button</string>
 	<string name="settings_hide_tasks_button_sum">Removes the Tasks button from the taskbar.</string>
-	<string name="settings_hide_nosim_icon">Hide NoSIM Icon</string>
-	<string name="settings_hide_nosim_icon_sum">Removes the NoSIM icon from statusbar.</string>
-	<string name="settings_hide_battery_percentage">Hide Battery Percentage</string>
-	<string name="settings_hide_battery_percentage_sum">Removes the battery percentage from statusbar.</string>
+	<string name="settings_hide_date">Hide Date</string>
+	<string name="settings_hide_date_sum">Removes the date from the taskbar below the clock.</string>
 	<string name="settings_hide_taskbar_separators">Hide Taskbar Separators</string>
 	<string name="settings_hide_taskbar_separators_sum">Removes empty gaps (separators) from taskbar.</string>
 
