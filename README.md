@@ -1,3 +1,28 @@
+# XposedDex One UI 3.1
+Samsung Dex modifications through Xposed
+
+1. Make Apps Immersive,
+Will remove window titlebar for maximized applications.
+
+2. Fix Samsung Browser,
+Enables secret mode (as it's disabled if Magisk installed) and disable always visible scroll bar (looks ugly under dark mode).
+
+3. Hide Tasks Button,
+Remove the tasks button on the taskbar.
+
+4. Hide Taskbar Separators,
+Removes empty gaps (separators) from taskbar.
+
+5. Hide Date,
+Removes the date below the clock in the taskbar.
+
+6. If both #4 and #5 are checked increment the size of icons that will fit into the taskbar
+
+NOTE: All changes require a restart.
+
+IMPORTANT: Requires Magisk and edXposed installed on your tablet. 
+Only tested with One UI 3.1, Android 11, Build T865XXU4CUE1 so latest release for Tab S6
+
 # XposedDex One UI 2.5
 Samsung Dex modifications through Xposed
 
